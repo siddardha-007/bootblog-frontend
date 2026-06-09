@@ -44,6 +44,24 @@ function UserProfile() {
     }
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+
+    // Force UTC interpretation if the string lacks a timezone offset
+    const cleanStr =
+      dateString.endsWith("Z") || dateString.includes("+")
+        ? dateString
+        : `${dateString}Z`;
+    const date = new Date(cleanStr);
+
+    return date.toLocaleDateString("en-IN", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      timeZone: "Asia/Kolkata", // Locks it to Indian Standard Time
+    });
+  };
+
   // Error boundary display view layout card
   if (errorMessage) {
     return (
@@ -155,11 +173,7 @@ function UserProfile() {
                     </span>
 
                     <span className="text-gray-400 font-mono">
-                      {new Date(post.createdAt).toLocaleDateString(undefined, {
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
+                      {formatDate(post.createdAt)}
                     </span>
                   </div>
                 </div>

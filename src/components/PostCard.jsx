@@ -7,11 +7,19 @@ function PostCard({ post }) {
   // Helper function to format the ISO date string beautifully
   const formatDate = (dateString) => {
     if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+
+    // Safely force UTC interpretation if the string lacks a timezone offset trailing descriptor
+    const cleanStr =
+      dateString.endsWith("Z") || dateString.includes("+")
+        ? dateString
+        : `${dateString}Z`;
+    const date = new Date(cleanStr);
+
+    return date.toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",
       day: "numeric",
+      timeZone: "Asia/Kolkata", // Forces Indian Standard Time
     });
   };
 
@@ -118,8 +126,8 @@ function PostCard({ post }) {
           </h2>
 
           {/* FIXED: Elements strip tags completely & apply word break properties directly */}
-          <p 
-            style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
+          <p
+            style={{ wordBreak: "break-word", overflowWrap: "break-word" }}
             className="text-sm sm:text-base leading-relaxed text-gray-600 mb-4 line-clamp-3 whitespace-normal"
           >
             {cleanSnippet || "No summary layout available for this post."}

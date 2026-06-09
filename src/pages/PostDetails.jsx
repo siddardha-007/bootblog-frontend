@@ -125,20 +125,33 @@ function PostDetails() {
 
   const formatDate = (dateString) => {
     if (!dateString) return "";
-    return new Date(dateString).toLocaleDateString("en-US", {
+    // Force UTC interpretation if the string lacks a timezone offset
+    const cleanStr =
+      dateString.endsWith("Z") || dateString.includes("+")
+        ? dateString
+        : `${dateString}Z`;
+    return new Date(cleanStr).toLocaleDateString("en-IN", {
       year: "numeric",
       month: "long",
       day: "numeric",
+      timeZone: "Asia/Kolkata",
     });
   };
 
   const formatCommentDate = (dateString) => {
     if (!dateString) return "";
-    return new Date(dateString).toLocaleString("en-US", {
+    // Force UTC interpretation if the string lacks a timezone offset
+    const cleanStr =
+      dateString.endsWith("Z") || dateString.includes("+")
+        ? dateString
+        : `${dateString}Z`;
+    return new Date(cleanStr).toLocaleString("en-IN", {
       month: "short",
       day: "numeric",
       hour: "2-digit",
       minute: "2-digit",
+      hour12: true, // Guarantees AM/PM format
+      timeZone: "Asia/Kolkata",
     });
   };
 
