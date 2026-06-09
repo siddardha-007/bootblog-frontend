@@ -5,7 +5,7 @@ import {
   getPostsByCategory,
   searchPosts,
 } from "../services/postService";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
 import { getAllCategories } from "../services/categoryService";
 import SidebarCarousel from "../components/SidebarCarousel";
