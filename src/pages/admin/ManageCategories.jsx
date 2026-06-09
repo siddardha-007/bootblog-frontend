@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../components/NavBar";
+import Navbar from "../../components/Navbar";
 import {
   getAllCategories,
   createCategory,
@@ -52,7 +52,7 @@ function ManageCategories() {
       const response = await createCategory({
         categoryName: newCategory.trim(),
       });
-      
+
       const addedItem = response?.data?.category || response?.data;
       if (addedItem) {
         setCategories((prev) => [...prev, addedItem]);
@@ -92,8 +92,8 @@ function ManageCategories() {
         prev.map((cat) =>
           cat.categoryId === editingId
             ? { ...cat, categoryName: editingName.trim() }
-            : cat
-        )
+            : cat,
+        ),
       );
 
       setEditingId(null);
@@ -113,7 +113,9 @@ function ManageCategories() {
     try {
       setIsDeleting(true);
       await deleteCategory(categoryIdToDelete);
-      setCategories((prev) => prev.filter((cat) => cat.categoryId !== categoryIdToDelete));
+      setCategories((prev) =>
+        prev.filter((cat) => cat.categoryId !== categoryIdToDelete),
+      );
       showToast("Category deleted successfully", "success");
     } catch (error) {
       console.error("Category destruction execution fault:", error);
@@ -130,18 +132,19 @@ function ManageCategories() {
 
       {/* Dynamic Visual Toast Notification System */}
       {toastMessage.text && (
-        <div className={`fixed top-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl border font-bold text-xs shadow-md animate-fade-in transition-all ${
-          toastMessage.type === "error" 
-            ? "bg-red-50 text-red-800 border-red-100" 
-            : "bg-emerald-50 text-emerald-800 border-emerald-100"
-        }`}>
+        <div
+          className={`fixed top-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl border font-bold text-xs shadow-md animate-fade-in transition-all ${
+            toastMessage.type === "error"
+              ? "bg-red-50 text-red-800 border-red-100"
+              : "bg-emerald-50 text-emerald-800 border-emerald-100"
+          }`}
+        >
           <span>{toastMessage.type === "error" ? "⚠️" : "✨"}</span>
           {toastMessage.text}
         </div>
       )}
 
       <div className="max-w-5xl mx-auto p-6">
-        
         {/* Module Header Segment */}
         <div className="mb-8 relative flex flex-col gap-2.5">
           <h1 className="text-4xl font-black text-gray-900 tracking-tight">
@@ -201,8 +204,8 @@ function ManageCategories() {
                     <tr
                       key={category.categoryId}
                       className={`transition-colors group ${
-                        categoryIdToDelete === category.categoryId 
-                          ? "bg-red-50/30" 
+                        categoryIdToDelete === category.categoryId
+                          ? "bg-red-50/30"
                           : "hover:bg-emerald-50/20"
                       }`}
                     >
@@ -219,7 +222,9 @@ function ManageCategories() {
                             value={editingName}
                             disabled={isActionLoading}
                             onChange={(e) => setEditingName(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleUpdate()}
+                            onKeyDown={(e) =>
+                              e.key === "Enter" && handleUpdate()
+                            }
                             className="bg-white text-gray-900 font-bold text-sm rounded-lg border border-emerald-900/20 p-2 w-full focus:outline-hidden focus:ring-2 focus:ring-[#5ea134]/20 focus:border-[#5ea134] max-w-sm disabled:opacity-60"
                           />
                         ) : (
@@ -289,7 +294,9 @@ function ManageCategories() {
                               Edit
                             </button>
                             <button
-                              onClick={() => setCategoryIdToDelete(category.categoryId)}
+                              onClick={() =>
+                                setCategoryIdToDelete(category.categoryId)
+                              }
                               className="text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1.5 rounded-lg border border-transparent hover:border-red-100 transition-all cursor-pointer"
                             >
                               Delete
@@ -315,7 +322,6 @@ function ManageCategories() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

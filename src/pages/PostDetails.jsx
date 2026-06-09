@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPostById, createComment } from "../services/postService";
 import { updateComment, deleteComment } from "../services/commentService";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -90,7 +90,7 @@ function PostDetails() {
         comments: prev.comments.map((c) =>
           c.commentId === commentId
             ? { ...c, text: response.data.text || editingText }
-            : c
+            : c,
         ),
       }));
 
@@ -113,7 +113,9 @@ function PostDetails() {
 
       setPost((prev) => ({
         ...prev,
-        comments: prev.comments.filter((c) => c.commentId !== commentIdToDelete),
+        comments: prev.comments.filter(
+          (c) => c.commentId !== commentIdToDelete,
+        ),
       }));
       setCommentIdToDelete(null);
     } catch (error) {
@@ -236,7 +238,8 @@ function PostDetails() {
 
           {!post.comments || post.comments.length === 0 ? (
             <div className="p-6 bg-[#f2f9f4]/40 rounded-2xl text-center text-sm font-semibold text-emerald-800/50 border border-dashed border-emerald-900/10 mb-8">
-              No responses recorded on this topic feed. Be the first to add a comment!
+              No responses recorded on this topic feed. Be the first to add a
+              comment!
             </div>
           ) : (
             <div className="space-y-4 mb-8 w-full max-w-3xl">
@@ -258,22 +261,49 @@ function PostDetails() {
                       {String(comment.userId) === String(currentUserId) && (
                         <div className="flex items-center gap-2 opacity-60 group-hover/comm:opacity-100 transition-opacity">
                           <button
-                            onClick={() => startEditingComment(comment.commentId, comment.text)}
+                            onClick={() =>
+                              startEditingComment(
+                                comment.commentId,
+                                comment.text,
+                              )
+                            }
                             title="Edit Comment"
                             className="text-gray-400 hover:text-emerald-700 transition-colors cursor-pointer"
                           >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+                            <svg
+                              className="w-3.5 h-3.5"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931zm0 0L19.5 7.125"
+                              />
                             </svg>
                           </button>
 
                           <button
-                            onClick={() => triggerDeleteConfirmation(comment.commentId)}
+                            onClick={() =>
+                              triggerDeleteConfirmation(comment.commentId)
+                            }
                             title="Delete Comment"
                             className="text-gray-400 hover:text-red-600 transition-colors cursor-pointer"
                           >
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            <svg
+                              className="w-3.5 h-3.5"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.5"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
                             </svg>
                           </button>
                         </div>
@@ -292,10 +322,12 @@ function PostDetails() {
                           if (editCommentError) setEditCommentError(false);
                         }}
                         className={`w-full bg-white text-gray-900 font-medium text-sm rounded-xl border p-2.5 focus:outline-hidden transition-all ${
-                          editCommentError ? "border-red-400 focus:border-red-500 bg-red-50/10" : "border-emerald-900/20 focus:border-[#5ea134]"
+                          editCommentError
+                            ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                            : "border-emerald-900/20 focus:border-[#5ea134]"
                         }`}
                       />
-                      
+
                       {editCommentError && (
                         <p className="text-[11px] font-bold text-red-600 pl-1 animate-fade-in">
                           ✨ Comment modifications cannot be left blank.
@@ -343,11 +375,12 @@ function PostDetails() {
                   )}
 
                   {/* Standard Static Comment View Mode */}
-                  {editingCommentId !== comment.commentId && commentIdToDelete !== comment.commentId && (
-                    <p className="text-gray-700 font-medium text-sm leading-relaxed pl-0.5 whitespace-pre-line mt-1">
-                      {comment.text}
-                    </p>
-                  )}
+                  {editingCommentId !== comment.commentId &&
+                    commentIdToDelete !== comment.commentId && (
+                      <p className="text-gray-700 font-medium text-sm leading-relaxed pl-0.5 whitespace-pre-line mt-1">
+                        {comment.text}
+                      </p>
+                    )}
                 </div>
               ))}
             </div>
@@ -358,7 +391,7 @@ function PostDetails() {
             <h3 className="text-sm font-black uppercase tracking-wider text-emerald-800/70 mb-2 pl-0.5">
               Join the conversation
             </h3>
-            
+
             <textarea
               value={commentText}
               onChange={(e) => {
@@ -368,7 +401,9 @@ function PostDetails() {
               placeholder="Share your thoughts or ask a question..."
               rows="3"
               className={`w-full text-gray-900 font-medium text-sm rounded-2xl border p-4 focus:outline-hidden focus:ring-2 focus:ring-[#5ea134]/10 transition-all duration-200 resize-none ${
-                commentError ? "border-red-400 focus:border-red-500 bg-red-50/10" : "bg-[#f2f9f4]/40 border-emerald-900/10 focus:border-[#5ea134]"
+                commentError
+                  ? "border-red-400 focus:border-red-500 bg-red-50/10"
+                  : "bg-[#f2f9f4]/40 border-emerald-900/10 focus:border-[#5ea134]"
               }`}
             />
 
@@ -387,7 +422,6 @@ function PostDetails() {
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>

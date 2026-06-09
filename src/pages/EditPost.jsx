@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import { getAllCategories } from "../services/categoryService";
 import { getPostById, updatePost } from "../services/postService";
 
@@ -41,7 +41,7 @@ function EditPost() {
       if (postResponse?.data) {
         setFormData({
           title: postResponse.data.title || "",
-          content: postResponse.data.content || "", 
+          content: postResponse.data.content || "",
           imageUrl: postResponse.data.imageUrl || "",
           categoryId: postResponse.data.categoryId || "",
         });
@@ -78,20 +78,22 @@ function EditPost() {
     if (!formData.content.trim()) {
       setErrors({
         global: "Validation constraints failed.",
-        fields: { content: "Please write some content before saving changes." }
+        fields: { content: "Please write some content before saving changes." },
       });
       setIsSubmitting(false);
       return;
     }
 
     try {
-      await updatePost(postId, formData); 
-      navigate(`/posts/${postId}`); 
+      await updatePost(postId, formData);
+      navigate(`/posts/${postId}`);
     } catch (error) {
       console.error(error);
       // Maps standard response payloads directly from handlePostError reject schema
       setErrors({
-        global: error.message || "Failed to finalize revision changes with data engine.",
+        global:
+          error.message ||
+          "Failed to finalize revision changes with data engine.",
         fields: error.fields || null,
       });
     } finally {
@@ -113,7 +115,6 @@ function EditPost() {
 
       <div className="flex-1 flex items-center justify-center max-w-4xl mx-auto w-full px-4 sm:px-6 py-10">
         <div className="w-full">
-          
           {/* Header Accent block */}
           <div className="mb-8 relative flex flex-col gap-2.5">
             <h1 className="text-4xl font-black text-gray-900 tracking-tight">
@@ -126,8 +127,10 @@ function EditPost() {
           </div>
 
           {/* Form Frame Element Wrapper */}
-          <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-emerald-900/5 w-full">
-            
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-emerald-900/5 w-full"
+          >
             {/* Global API Exception Banner Alert */}
             {errors.global && !errors.fields && (
               <div className="mb-6 p-4 bg-red-50/80 border border-red-100 rounded-2xl text-xs font-bold text-red-700 animate-fade-in flex items-center gap-2">
@@ -136,7 +139,6 @@ function EditPost() {
             )}
 
             <div className="space-y-6">
-              
               {/* Title input */}
               <div className="flex flex-col">
                 <label className="block text-xs font-black uppercase tracking-wider text-emerald-800/70 mb-2 pl-1">
@@ -150,8 +152,8 @@ function EditPost() {
                   value={formData.title}
                   onChange={handleChange}
                   className={`w-full px-4 py-3 text-gray-900 font-bold text-lg rounded-xl border focus:outline-hidden focus:ring-2 focus:ring-[#5ea134]/10 transition-all ${
-                    errors.fields?.title 
-                      ? "border-red-300 focus:border-red-500 bg-red-50/5" 
+                    errors.fields?.title
+                      ? "border-red-300 focus:border-red-500 bg-red-50/5"
                       : "bg-[#f2f9f4]/40 border-emerald-900/10 focus:border-[#5ea134]"
                   }`}
                 />
@@ -175,14 +177,17 @@ function EditPost() {
                     value={formData.categoryId}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 text-gray-900 font-semibold rounded-xl border focus:outline-hidden focus:ring-2 focus:ring-[#5ea134]/10 cursor-pointer transition-all ${
-                      errors.fields?.categoryId 
-                        ? "border-red-300 focus:border-red-500 bg-red-50/5" 
+                      errors.fields?.categoryId
+                        ? "border-red-300 focus:border-red-500 bg-red-50/5"
                         : "bg-[#f2f9f4]/40 border-emerald-900/10 focus:border-[#5ea134]"
                     }`}
                   >
                     <option value="">Select Category</option>
                     {categories.map((category) => (
-                      <option key={category.categoryId} value={category.categoryId}>
+                      <option
+                        key={category.categoryId}
+                        value={category.categoryId}
+                      >
                         {category.categoryName}
                       </option>
                     ))}
@@ -205,8 +210,8 @@ function EditPost() {
                     value={formData.imageUrl}
                     onChange={handleChange}
                     className={`w-full px-4 py-3 text-gray-900 font-medium rounded-xl border focus:outline-hidden focus:ring-2 focus:ring-[#5ea134]/10 transition-all ${
-                      errors.fields?.imageUrl 
-                        ? "border-red-300 focus:border-red-500 bg-red-50/5" 
+                      errors.fields?.imageUrl
+                        ? "border-red-300 focus:border-red-500 bg-red-50/5"
                         : "bg-[#f2f9f4]/40 border-emerald-900/10 focus:border-[#5ea134]"
                     }`}
                   />
@@ -233,8 +238,8 @@ function EditPost() {
                   onChange={handleChange}
                   style={{ minHeight: "250px" }}
                   className={`w-full px-5 py-4 text-gray-900 font-medium text-base rounded-2xl border focus:outline-hidden focus:ring-2 focus:ring-[#5ea134]/10 tracking-wide leading-relaxed resize-y transition-all duration-200 ${
-                    errors.fields?.content 
-                      ? "border-red-300 focus:border-red-500 bg-red-50/5" 
+                    errors.fields?.content
+                      ? "border-red-300 focus:border-red-500 bg-red-50/5"
                       : "bg-[#f2f9f4]/20 border-emerald-900/10 focus:border-[#5ea134] placeholder-gray-400"
                   }`}
                 />

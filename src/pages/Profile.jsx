@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import {
   getCurrentUser,
   getCurrentUserPosts,
@@ -31,7 +31,7 @@ function Profile() {
 
   const handleDelete = async () => {
     if (!postIdToDelete) return;
-    
+
     try {
       setIsDeleting(true);
       await deletePost(postIdToDelete);
@@ -71,7 +71,7 @@ function Profile() {
       setUser(response.data);
       setNewUsername(response.data.username);
       setIsEditing(false);
-      
+
       setProfileSuccessMsg("Profile saved successfully");
       setTimeout(() => setProfileSuccessMsg(""), 4000);
     } catch (error) {
@@ -95,10 +95,8 @@ function Profile() {
 
       {/* Main Structural Wrapper Container */}
       <div className="max-w-5xl mx-auto p-6 flex flex-col items-center justify-center space-y-8">
-        
         {/* SECTION 1: Top User Card */}
         <div className="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-emerald-900/5 w-full text-center flex flex-col items-center justify-center relative">
-          
           {profileSuccessMsg && (
             <div className="absolute top-4 bg-emerald-50 text-emerald-800 text-xs font-bold px-4 py-2 rounded-xl border border-emerald-100 shadow-xs animate-fade-in">
               ✨ {profileSuccessMsg}
@@ -151,8 +149,18 @@ function Profile() {
                     onClick={() => setIsEditing(true)}
                     className="flex items-center gap-1 px-2.5 py-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 hover:bg-[#e4f2e9] border border-emerald-900/5 rounded-lg transition-all cursor-pointer"
                   >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                    <svg
+                      className="w-3 h-3"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                      />
                     </svg>
                     Edit
                   </button>
@@ -205,7 +213,7 @@ function Profile() {
                       <span className="inline-block text-[10px] font-black uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-md">
                         {post.categoryName}
                       </span>
-                      
+
                       {/* Control Panel Tray */}
                       {postIdToDelete !== post.postId && (
                         <div className="flex items-center gap-1 opacity-80 group-hover/item:opacity-100 transition-opacity">
@@ -214,25 +222,47 @@ function Profile() {
                             title="Edit Post"
                             className="p-1.5 text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg border border-transparent transition-all cursor-pointer"
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.2" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2.2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931zm0 0L19.5 7.125"
+                              />
                             </svg>
                           </button>
 
                           <button
-                            onClick={() => triggerDeleteConfirmation(post.postId)}
+                            onClick={() =>
+                              triggerDeleteConfirmation(post.postId)
+                            }
                             title="Delete Post"
                             className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg border border-transparent transition-all cursor-pointer"
                           >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            <svg
+                              className="w-4 h-4"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                              />
                             </svg>
                           </button>
                         </div>
                       )}
                     </div>
 
-                    <h3 
+                    <h3
                       onClick={() => navigate(`/posts/${post.postId}`)}
                       className="font-black text-base text-gray-900 line-clamp-2 pt-1 group-hover/item:text-[#5ea134] transition-colors cursor-pointer leading-snug"
                     >
@@ -272,9 +302,19 @@ function Profile() {
                       onClick={() => navigate(`/posts/${post.postId}`)}
                       className="text-xs font-bold text-emerald-800/70 group-hover/item:text-[#4c8529] transition-colors mt-2 flex items-center gap-1 cursor-pointer align-bottom"
                     >
-                      Read full story 
-                      <svg className="w-3 h-3 group-hover/item:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                      Read full story
+                      <svg
+                        className="w-3 h-3 group-hover/item:translate-x-0.5 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                        />
                       </svg>
                     </button>
                   )}
@@ -283,7 +323,6 @@ function Profile() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

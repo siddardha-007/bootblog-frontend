@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import Navbar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 import { getUserById, getUserPosts } from "../services/userService";
 
 function UserProfile() {
@@ -10,7 +10,7 @@ function UserProfile() {
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Track backend runtime server exceptions (like 500 crashes)
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -26,7 +26,7 @@ function UserProfile() {
       // 1. Fetch data components concurrently to reduce UI waterfall strain
       const [userResponse, postsResponse] = await Promise.all([
         getUserById(userId),
-        getUserPosts(userId)
+        getUserPosts(userId),
       ]);
 
       setUser(userResponse.data);
@@ -34,7 +34,10 @@ function UserProfile() {
     } catch (error) {
       console.error("Error loading user profile channels:", error);
       // Capture standard message strings parsed out by handlePostError interceptor
-      setErrorMessage(error.message || "The data engine encountered an internal 500 error processing this feed.");
+      setErrorMessage(
+        error.message ||
+          "The data engine encountered an internal 500 error processing this feed.",
+      );
     } finally {
       // ✨ FIXED: This ensures loading always exits, breaking the infinite spinner trap
       setLoading(false);
@@ -51,7 +54,9 @@ function UserProfile() {
             <div className="w-12 h-12 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-xl mx-auto mb-4 font-bold border border-red-100">
               ⚠️
             </div>
-            <h2 className="text-lg font-black text-gray-900 tracking-tight mb-2">Profile Unreachable</h2>
+            <h2 className="text-lg font-black text-gray-900 tracking-tight mb-2">
+              Profile Unreachable
+            </h2>
             <p className="text-xs font-medium text-gray-500 leading-relaxed mb-6">
               {errorMessage}
             </p>
@@ -86,11 +91,10 @@ function UserProfile() {
 
       {/* Main Structural Layout Wrapper */}
       <div className="flex-1 max-w-5xl mx-auto w-full px-6 py-10 space-y-8">
-        
         {/* User Info Header Card */}
         <div className="bg-white p-6 md:p-8 rounded-3xl border border-emerald-900/5 shadow-xs relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1.5 bg-[#5ea134]"></div>
-          
+
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="space-y-1">
               <span className="text-[10px] font-black uppercase tracking-widest bg-[#5ea134]/10 text-[#4c8529] px-2.5 py-1 rounded-md border border-[#5ea134]/20">
@@ -100,7 +104,7 @@ function UserProfile() {
                 {user?.username}
               </h1>
             </div>
-            
+
             <div className="bg-[#f2f9f4]/60 px-4 py-2 rounded-xl border border-emerald-900/5 self-start sm:self-center">
               <span className="block text-xl font-black text-emerald-900 leading-none">
                 {posts.length}
@@ -139,7 +143,8 @@ function UserProfile() {
                     </h3>
 
                     <p className="text-xs text-gray-500 font-medium leading-relaxed line-clamp-3">
-                      {post.content?.replace(/<[^>]*>/g, "").substring(0, 120)}...
+                      {post.content?.replace(/<[^>]*>/g, "").substring(0, 120)}
+                      ...
                     </p>
                   </div>
 
@@ -162,7 +167,6 @@ function UserProfile() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );

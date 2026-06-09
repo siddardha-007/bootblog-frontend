@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../components/NavBar";
+import Navbar from "../../components/Navbar";
 import {
   getAllPosts,
   searchPosts,
@@ -85,18 +85,19 @@ function ManagePosts() {
 
       {/* Dynamic Non-blocking Success/Error Banner Toast Notification */}
       {toastMessage.text && (
-        <div className={`fixed top-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl border font-bold text-xs shadow-md animate-fade-in transition-all ${
-          toastMessage.type === "error" 
-            ? "bg-red-50 text-red-800 border-red-100" 
-            : "bg-emerald-50 text-emerald-800 border-emerald-100"
-        }`}>
+        <div
+          className={`fixed top-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-2xl border font-bold text-xs shadow-md animate-fade-in transition-all ${
+            toastMessage.type === "error"
+              ? "bg-red-50 text-red-800 border-red-100"
+              : "bg-emerald-50 text-emerald-800 border-emerald-100"
+          }`}
+        >
           <span>{toastMessage.type === "error" ? "⚠️" : "✨"}</span>
           {toastMessage.text}
         </div>
       )}
 
       <div className="max-w-7xl mx-auto p-6">
-        
         {/* Module Header Title Block */}
         <div className="mb-8 relative flex flex-col gap-2.5">
           <h1 className="text-4xl font-black text-gray-900 tracking-tight">
@@ -171,8 +172,8 @@ function ManagePosts() {
                     <tr
                       key={post.postId}
                       className={`transition-colors group ${
-                        postIdToDelete === post.postId 
-                          ? "bg-red-50/30" 
+                        postIdToDelete === post.postId
+                          ? "bg-red-50/30"
                           : "hover:bg-emerald-50/20"
                       }`}
                     >
@@ -189,7 +190,9 @@ function ManagePosts() {
                       {/* Author */}
                       <td className="p-4 text-gray-500 truncate">
                         {post.username || (
-                          <span className="text-xs text-gray-300 italic">Anonymous</span>
+                          <span className="text-xs text-gray-300 italic">
+                            Anonymous
+                          </span>
                         )}
                       </td>
 
@@ -200,7 +203,9 @@ function ManagePosts() {
                             {post.categoryName}
                           </span>
                         ) : (
-                          <span className="text-xs text-gray-300 italic font-normal">None</span>
+                          <span className="text-xs text-gray-300 italic font-normal">
+                            None
+                          </span>
                         )}
                       </td>
 
@@ -283,7 +288,6 @@ function ManagePosts() {
             </button>
           </div>
         )}
-
       </div>
     </div>
   );

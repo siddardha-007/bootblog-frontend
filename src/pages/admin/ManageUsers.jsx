@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Navbar from "../../components/NavBar";
+import Navbar from "../../components/Navbar";
 import { getAllUsers } from "../../services/adminService";
 
 function ManageUsers() {
@@ -27,7 +27,6 @@ function ManageUsers() {
       <Navbar />
 
       <div className="max-w-6xl mx-auto p-6">
-        
         {/* Module Header block Section */}
         <div className="mb-8 relative flex flex-col gap-2.5">
           <h1 className="text-4xl font-black text-gray-900 tracking-tight">
@@ -62,26 +61,29 @@ function ManageUsers() {
                     <th className="p-4 pr-6">Email Address</th>
                   </tr>
                 </thead>
-                
+
                 <tbody className="divide-y divide-gray-100 text-sm font-medium text-gray-700">
                   {users.map((user) => (
-                    <tr 
-                      key={user.userId} 
+                    <tr
+                      key={user.userId}
                       className="hover:bg-emerald-50/20 transition-colors group"
                     >
                       {/* ID Row Column */}
                       <td className="p-4 pl-6 font-mono text-xs text-gray-400 font-bold group-hover:text-[#4c8529]">
                         #{user.userId}
                       </td>
-                      
+
                       {/* Username Row Column */}
                       <td className="p-4 font-bold text-gray-900 truncate max-w-50">
                         {user.username}
                       </td>
-                      
+
                       {/* Email Row Column with defensive wrap controls */}
-                      <td 
-                        style={{ wordBreak: 'break-word', overflowWrap: 'break-word' }}
+                      <td
+                        style={{
+                          wordBreak: "break-word",
+                          overflowWrap: "break-word",
+                        }}
                         className="p-4 pr-6 font-medium text-gray-500 whitespace-normal max-w-75"
                       >
                         {user.email || (
@@ -97,7 +99,6 @@ function ManageUsers() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
