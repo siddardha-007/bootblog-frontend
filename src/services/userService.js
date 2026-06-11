@@ -1,56 +1,33 @@
-import axios from "axios";
+import api from "./api"; // Import your central client instance
 
-const API_URL = "https://bootblog-backend.onrender.com/api/users";
+// ❌ DELETED: import axios from "axios";
+// ❌ DELETED: const API_URL = "https://bootblog-backend.onrender.com/api/users";
+// ❌ DELETED: const getHeaders = () => { ... }
 
-const getHeaders = () => ({
-  headers: {
-    Authorization: `Bearer ${localStorage.getItem("token")}`,
-  },
-});
+export const getCurrentUser = () => {
+  return api.get("/users/me");
+};
 
-export const getCurrentUser = () => axios.get(`${API_URL}/me`, getHeaders());
+export const updateCurrentUser = (userData) => {
+  return api.put("/users/me", userData);
+};
 
-export const updateCurrentUser = (userData) =>
-  axios.put(`${API_URL}/me`, userData, getHeaders());
+export const getCurrentUserPosts = () => {
+  return api.get("/users/me/posts");
+};
 
-export const getCurrentUserPosts = () =>
-  axios.get(`${API_URL}/me/posts`, getHeaders());
-
-export const getCurrentUserComments = () =>
-  axios.get(`${API_URL}/me/comments`, getHeaders());
+export const getCurrentUserComments = () => {
+  return api.get("/users/me/comments");
+};
 
 export const getCurrentUserRole = () => {
-  const token = localStorage.getItem("token");
-
-  return axios.get("https://bootblog-backend.onrender.com/api/users/me/role", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  return api.get("/users/me/role");
 };
 
 export const getUserById = (userId) => {
-  const token = localStorage.getItem("token");
-
-  return axios.get(
-    `https://bootblog-backend.onrender.com/api/users/${userId}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+  return api.get(`/users/${userId}`);
 };
 
 export const getUserPosts = (userId) => {
-  const token = localStorage.getItem("token");
-
-  return axios.get(
-    `https://bootblog-backend.onrender.com/api/users/${userId}/posts`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
+  return api.get(`/users/${userId}/posts`);
 };
